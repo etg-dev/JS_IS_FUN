@@ -233,3 +233,78 @@ let count = 10,
 // let        true            true       false                       true              false
 
 // const      true            true       false                       false             false
+
+//!           last but not least
+//?           can i define function in objects
+
+//the answer is yes consider this example
+// const object1 = {
+//   fName: "erfan",
+//   lName: "taghinia",
+//   fullName: fName + lName,
+// };
+//! if i run above code  we get a nasty error
+
+// what if i write this
+// const object1 = {
+//   fName: "erfan",
+//   lName: "taghinia",
+//   fullName: object1.fName + object1.lName,
+// };
+//! if i run above code  again we get an error
+
+//so whats the solution
+
+// const object1 = {
+//   fName: "erfan",
+//   lName: "taghinia",
+//   fullName: function () {
+//     return object1.fName + " " + object1.lName;
+//   },
+// };
+
+// const fullName = object1.fullName();
+
+// console.log(fullName);
+
+//but that would be great to use this instead of objectName
+console.log("\n***this and inner functions***\n");
+const object1 = {
+  fName: "erfan",
+  lName: "taghinia",
+  fullName: function () {
+    return this.fName + " " + this.lName;
+  },
+};
+
+const fullName = object1.fullName();
+
+console.log(fullName);
+
+//!what is the this key
+//this is refer to parent
+//if we use this globally refer to window object
+console.log(this);
+
+//but if inner fuction in object refer to the object
+const object2 = {
+  fName: "erfan",
+  lName: "taghinia",
+  fullName: function () {
+    console.log(this);
+  },
+};
+
+console.log(object2.fullName());
+
+//! notice : you cannot use this when you defined arrowfunctions
+console.log("\n***Object with ArrowFunction and this***\n");
+const object3 = {
+  fName: "erfan",
+  lName: "taghinia",
+  fullName: () => {
+    console.log(this);
+  },
+};
+
+console.log(object3.fullName());
