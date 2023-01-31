@@ -52,3 +52,18 @@ switch (day) {
 }
 
 console.log(day);
+
+//*         ternary operator
+//condition ? exprIfTrue : exprIfFalse
+
+const randomNumber = 4;
+
+randomNumber % 2 == 0 ? console.log("even") : console.log("odd");
+
+//or with if syntax
+
+// if (randomNumber % 2 == 0) {
+//   console.log("even");
+// } else {
+//   console.log("odd");
+// }
