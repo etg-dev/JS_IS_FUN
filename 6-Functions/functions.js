@@ -12,6 +12,7 @@ reuslt = a + b;
 //!when we wanna repeate or organize
 //You can use the same code many times with different arguments, to produce different results.
 
+/////////////////////////////////////////////////////////////
 //?                      Funciton Syntax
 
 // function name(parameter1, parameter2, parameter3) {
@@ -56,15 +57,19 @@ console.log("***infinitySum function output***");
 console.log(resultInfinitySum);
 
 /////////////////////////////////////////////////////////////
-
 //?                          expression function
+
 const pluseTwo = function (x) {
   return x + 2;
 };
 const resultPluseTwo = pluseTwo(2);
-//result is : 4
 
-//Arrow function
+console.log("***testExpression function output***");
+console.log(resultPluseTwo);
+
+/////////////////////////////////////////////////////////////
+//?                         Arrow function
+
 const testArrow = (x) => {
   if (x > 10) {
     console.log("bigger than 10");
@@ -74,7 +79,104 @@ const testArrow = (x) => {
 console.log("***testArrow function output***");
 testArrow(12);
 
-//!                  Advance section
+///////////////////////////////////////////////////////////////
+//?                         forEach
+
+console.log("***forEach***");
+const arr = ["erfan", "mohammad", "lorem", "lorem2"];
+//! unComment
+// const foreach = arr.forEach((elem,index) => {
+//   console.log(elem);
+// });
+//!
+
+const printIndex = function (elem, index) {
+  console.log(elem);
+  console.log(index);
+};
+const foreach = arr.forEach(printIndex);
+
+///////////////////////////////////////////////////////////////
+//?                         function inside objects
+
+//can i define function in objects ?
+//the answer is yes consider this example
+// const object1 = {
+//   fName: "erfan",
+//   lName: "taghinia",
+//   fullName: fName + lName,
+// };
+//! if i run above code  we get a nasty error
+
+// what if i write this
+// const object1 = {
+//   fName: "erfan",
+//   lName: "taghinia",
+//   fullName: object1.fName + object1.lName,
+// };
+//! if i run above code  again we get an error
+
+//so whats the solution
+
+// const object1 = {
+//   fName: "erfan",
+//   lName: "taghinia",
+//   fullName: function () {
+//     return object1.fName + " " + object1.lName;
+//   },
+// };
+
+// const fullName = object1.fullName();
+
+// console.log(fullName);
+
+//but that would be great to use this instead of objectName
+console.log("\n***this and inner functions***\n");
+const object1 = {
+  fName: "erfan",
+  lName: "taghinia",
+  fullName: function () {
+    return this.fName + " " + this.lName;
+  },
+};
+
+const fullName = object1.fullName();
+
+console.log(fullName);
+
+//!what is the this key
+//this is refer to parent
+//if we use this globally refer to window object
+console.log(this);
+
+//but if inner fuction in object refer to the object
+const object2 = {
+  fName: "erfan",
+  lName: "taghinia",
+  fullName: function () {
+    console.log(this);
+  },
+};
+
+console.log(object2.fullName());
+
+//! notice : you cannot use this when you defined arrowfunctions
+console.log("\n***Object with ArrowFunction and this***\n");
+const object3 = {
+  fName: "erfan",
+  lName: "taghinia",
+  fullName: () => {
+    console.log(this);
+  },
+};
+
+console.log(object3.fullName());
+
+///////////////////////////////////////////////////////////////
+
+//!           last but not least
+
+//!           Advance section
 
 //*                 Scope
 // Before ES6 (2015), JavaScript had only Global Scope and Function Scope.
@@ -233,78 +335,3 @@ let count = 10,
 // let        true            true       false                       true              false
 
 // const      true            true       false                       false             false
-
-//!           last but not least
-//?           can i define function in objects
-
-//the answer is yes consider this example
-// const object1 = {
-//   fName: "erfan",
-//   lName: "taghinia",
-//   fullName: fName + lName,
-// };
-//! if i run above code  we get a nasty error
-
-// what if i write this
-// const object1 = {
-//   fName: "erfan",
-//   lName: "taghinia",
-//   fullName: object1.fName + object1.lName,
-// };
-//! if i run above code  again we get an error
-
-//so whats the solution
-
-// const object1 = {
-//   fName: "erfan",
-//   lName: "taghinia",
-//   fullName: function () {
-//     return object1.fName + " " + object1.lName;
-//   },
-// };
-
-// const fullName = object1.fullName();
-
-// console.log(fullName);
-
-//but that would be great to use this instead of objectName
-console.log("\n***this and inner functions***\n");
-const object1 = {
-  fName: "erfan",
-  lName: "taghinia",
-  fullName: function () {
-    return this.fName + " " + this.lName;
-  },
-};
-
-const fullName = object1.fullName();
-
-console.log(fullName);
-
-//!what is the this key
-//this is refer to parent
-//if we use this globally refer to window object
-console.log(this);
-
-//but if inner fuction in object refer to the object
-const object2 = {
-  fName: "erfan",
-  lName: "taghinia",
-  fullName: function () {
-    console.log(this);
-  },
-};
-
-console.log(object2.fullName());
-
-//! notice : you cannot use this when you defined arrowfunctions
-console.log("\n***Object with ArrowFunction and this***\n");
-const object3 = {
-  fName: "erfan",
-  lName: "taghinia",
-  fullName: () => {
-    console.log(this);
-  },
-};
-
-console.log(object3.fullName());
