@@ -4,7 +4,7 @@ Here we get to know some programming principles implemented with the lovely Java
 
 What things do you learn here?
 
-##Basics Section
+<h3>Basics Section</h3>
 
 0 . GetStart-And-History <br />
 1 . DataTypes <br />
@@ -17,7 +17,7 @@ What things do you learn here?
 8 . JsFeatures <br />
 9 . Recursive <br />
 
-##Advance Section
+<h3>Advance Section</h3>
 
 A . Complexity <br />
 B . OOP <br />
