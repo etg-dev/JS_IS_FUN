@@ -22,6 +22,8 @@ What things do you learn here?
 A . Complexity <br />
 B . OOP <br />
 C . Constructor-Function <br />
+D . Prototype <br />
+E . ES6-Classes <br />
 
 As I always say, programming is not about syntax, it's about logic and how you react when faced with a problem.
 
