@@ -16,14 +16,20 @@ What things do you learn here?
 7 . Debugging <br />
 8 . JsFeatures <br />
 9 . Recursive <br />
-
-<h3>Advance Section</h3>
-
 A . Complexity <br />
+
+<h3>OOP Section</h3>
+
 B . OOP <br />
 C . Constructor-Function <br />
 D . Prototype <br />
 E . ES6-Classes <br />
+F . Object-Create <br />
+G . Inheritance <br />
+H . Encapsulation <br />
+I . TestYourSelf <br />
+
+<h3>Data Structure Section</h3>
 
 As I always say, programming is not about syntax, it's about logic and how you react when faced with a problem.
 
