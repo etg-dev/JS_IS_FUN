@@ -167,22 +167,126 @@ class Book {
     this.#authors = authors;
   }
 }
+//!  add a book for author
+// const mockBookOne = {
+//   name: "Clean Code",
+//   price: "15$",
+//   publish: new Date("01/03/1999"),
+//   authors: ["Robert C.Martin"],
+// };
 
-const mockBookOne = {
-  name: "Clean Code",
-  price: "15$",
-  publish: new Date("01/03/1999"),
-  authors: ["Robert C.Martin"],
+// const mockBookTwo = {
+//   name: "Code Complete (2 Edition)",
+//   price: "13$",
+//   publish: new Date("02/09/2003"),
+//   authors: ["Robert C.Martin", "corman"],
+// };
+
+// const bob = new Author("Robert", "Martin", 1751345566);
+// bob.addBook(mockBookOne);
+// bob.addBook(mockBookTwo);
+// console.log(bob);
+
+//CRUD => CREATE READ UPDATE DELETE
+//!
+
+class Library {
+  #persons = [];
+
+  constructor() {}
+
+  addToPersons(person) {
+    this.#persons.push(person);
+  }
+
+  /**
+   * @param {persons} person
+   * @typedef {persons} Object
+   * @memberof Library
+   * Documentation : Pass an array or object as parameter
+   */
+  createMember(persons) {
+    let person = null;
+    const inputHandler = (personInfo) => {
+      const { fName, lName, nCode, memberType } = personInfo;
+      switch (memberType) {
+        case "AUTHOR":
+          person = new Author(fName, lName, nCode);
+          break;
+        case "STAFF":
+          person = new Staff(fName, lName, nCode);
+          break;
+        case "MEMBER":
+          person = new Member(fName, lName, nCode);
+          console.log("MEMBER");
+          break;
+        default:
+          console.log("YOU HAVE TO SET YOUR TYPE");
+          break;
+      }
+      if (person !== null) {
+        this.addToPersons(person);
+        const ID = Date.now();
+        console.log(
+          `${person.fName} ${
+            person.lName
+          } added as ${memberType}  & membership ID : ${ID + Math.random()}`
+        );
+      }
+    };
+
+    if (Array.isArray(persons)) {
+      persons.map((personInfo) => {
+        inputHandler(personInfo);
+      });
+    } else if (
+      typeof persons === "object" &&
+      !Array.isArray(persons) &&
+      persons !== null
+    ) {
+      inputHandler(persons);
+    } else {
+      console.log("You have to send an Array or Object");
+    }
+  }
+
+  //! Complete this method
+  deleteMember(nCode) {
+    //get nCode and find memeber in #persons list
+    //delete that member
+    //tip: We assume we don't have duplicate national code
+  }
+}
+
+const members = [
+  {
+    fName: "Erfan",
+    lName: "Taghinia",
+    nCode: "0926068090",
+    memberType: "AUTHOR",
+  },
+  {
+    fName: "Ali",
+    lName: "Hoseini",
+    nCode: "0926067060",
+    memberType: "AUTHOR",
+  },
+  {
+    fName: "Mohammad",
+    lName: "Javadi",
+    nCode: "0926063055",
+    memberType: "AUTHOR",
+  },
+];
+
+const staff = {
+  fName: "Erfan",
+  lName: "Taghinia",
+  nCode: "0926068090",
+  memberType: "AUTHOR",
 };
 
-const mockBookTwo = {
-  name: "Code Complete (2 Edition)",
-  price: "13$",
-  publish: new Date("02/09/2003"),
-  authors: ["Robert C.Martin", "corman"],
-};
+const sajadLib = new Library();
 
-const bob = new Author("Robert", "Martin", 1751345566);
-bob.addBook(mockBookOne);
-bob.addBook(mockBookTwo);
-console.log(bob);
+sajadLib.createMember(members);
+sajadLib.createMember(staff);
