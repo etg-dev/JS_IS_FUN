@@ -47,19 +47,14 @@ class Staff extends Member {
   #staffCode;
   constructor(fName, lName, nCode) {
     super(fName, lName, nCode);
-    this.#staffCode = Math.random()
-      .toFixed(6)
-      .toString()
-      .split(".")
-      .toString()
-      .slice(2);
+    this.#staffCode = 123;
   }
 
-  getStaffCode() {
-    return this.staffCode;
+  get staffCode() {
+    return this.#staffCode;
   }
 
-  setStaffCode(staffCode) {
+  set staffCode(staffCode) {
     this.#staffCode = staffCode;
   }
 }
@@ -250,12 +245,42 @@ class Library {
     }
   }
 
-  //! Complete this method
-  deleteMember(nCode) {
-    //get nCode and find memeber in #persons list
-    //delete that member
-    //tip: We assume we don't have duplicate national code
+  #isStaff(staffCode) {
+    let validation = false;
+    this.#persons.map((person) => {
+      if (person.staffCode === staffCode) {
+        validation = true;
+      }
+    });
+    return validation;
   }
+
+  #findMember(nCode, staffCode) {
+    let foundIndex = -1;
+    if (this.#isStaff()) {
+      this.#persons.map((person, index) => {
+        if (person.nCode === nCode) {
+          foundIndex = index;
+        }
+      });
+      return foundIndex;
+    } else {
+      console.log("YOU DO NOT HAVE ACCESS");
+    }
+  }
+
+  deleteMember(nCode, staffCode) {
+    const memberIndex = this.#findMember(nCode, staffCode);
+    this.#persons.splice(memberIndex, 1);
+  }
+
+  printAllMember() {
+    this.#persons.map((person) => {
+      console.log(person);
+    });
+  }
+
+  //
 }
 
 const members = [
@@ -283,10 +308,18 @@ const staff = {
   fName: "Erfan",
   lName: "Taghinia",
   nCode: "0926068090",
-  memberType: "AUTHOR",
+  memberType: "STAFF",
 };
 
 const sajadLib = new Library();
 
 sajadLib.createMember(members);
 sajadLib.createMember(staff);
+
+console.log("\nBefore delete\n");
+sajadLib.printAllMember();
+
+sajadLib.deleteMember("0926067060", 123);
+
+console.log("\n After delete\n");
+sajadLib.printAllMember();
