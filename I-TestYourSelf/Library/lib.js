@@ -32,7 +32,7 @@ class Member {
     this.#nCode = newNCode;
   }
 
-  get allProperty() {
+  getAllProperty() {
     return { nCode: this.#nCode, fName: this.#fName, lName: this.#lName };
   }
 
@@ -255,29 +255,55 @@ class Library {
     return validation;
   }
 
-  #findMember(nCode, staffCode) {
+  #findMember(nCode, staffCode, returnIndex) {
     let foundIndex = -1;
-    if (this.#isStaff()) {
+    let foundMember = -1;
+    if (this.#isStaff(staffCode)) {
       this.#persons.map((person, index) => {
         if (person.nCode === nCode) {
           foundIndex = index;
+          foundMember = person;
         }
       });
-      return foundIndex;
+      if (returnIndex) {
+        return foundIndex;
+      } else {
+        return foundMember;
+      }
     } else {
       console.log("YOU DO NOT HAVE ACCESS");
     }
   }
 
+  findMember(nCode, staffCode) {
+    const result = this.#findMember(nCode, staffCode);
+    if (!result) return null;
+    return result;
+  }
+
   deleteMember(nCode, staffCode) {
-    const memberIndex = this.#findMember(nCode, staffCode);
-    this.#persons.splice(memberIndex, 1);
+    const memberIndex = this.#findMember(nCode, staffCode, true);
+    if (memberIndex >= 0) {
+      this.#persons.splice(memberIndex, 1);
+    } else {
+      console.log("Person Not Found");
+    }
   }
 
   printAllMember() {
     this.#persons.map((person) => {
       console.log(person);
     });
+  }
+
+  updateMember(nCode, staffCode, newProp) {
+    const member = this.#findMember(nCode, staffCode);
+    if (member !== -1) {
+      const oldObject = member.getAllProperty();
+      member.setAllProperty({ ...oldObject, ...newProp });
+    } else {
+      console.log("NOT FOUND");
+    }
   }
 
   //
@@ -313,13 +339,44 @@ const staff = {
 
 const sajadLib = new Library();
 
+console.log("\nCREATE MEMBER\n");
+
 sajadLib.createMember(members);
 sajadLib.createMember(staff);
 
-console.log("\nBefore delete\n");
+console.log("\nBEFORE DELETE\n");
 sajadLib.printAllMember();
 
+console.log("\nAFTER DELETE\n");
 sajadLib.deleteMember("0926067060", 123);
-
-console.log("\n After delete\n");
 sajadLib.printAllMember();
+
+console.log("\nFIND MEMBER\n");
+const found = sajadLib.findMember("0926063055", 123);
+console.log(found);
+
+console.log("\nBEFORE UPDATE\n");
+sajadLib.printAllMember();
+
+console.log("\nAFTER UPDATE\n");
+sajadLib.updateMember("0926063055", 123, { fName: "ali" });
+sajadLib.printAllMember();
+
+//! Task => complete these methods
+// Implement CRUD for books
+// Each book have these property {name:... , price:... , publish:... , authors:...}
+/*
+  addToBooks(book) {}
+
+  createBook(bookInfo) {}
+
+  findBook(bookName, returnIndex) {}
+
+  removeFromBooks(bookIndex) {}
+
+  deleteBook(bookName) {}
+
+  readAllBooks() {}
+
+  updateBooks(bookName, newBookProperty) {}
+*/
