@@ -19,6 +19,13 @@ export const members = [
   },
 ];
 
+export const staff = {
+  fName: "Erfan",
+  lName: "Taghinia",
+  nCode: "0926068090",
+  memberType: "STAFF",
+};
+
 export const books = [
   {
     name: "Clean Code",
@@ -33,9 +40,16 @@ export const books = [
     authors: "Steve McConnell",
   },
   {
-    name: "Design Patterns GoF",
+    name: "Clean Code",
     price: "22$",
     publish: new Date("01/01/2000"),
     authors: ["Erich Gamma", "Richard Helm", "Ralph Johnson", "John Vlissides"],
   },
 ];
+
+export const book = {
+  name: "Code Complete (2 Edition)",
+  price: "13$",
+  publish: new Date("02/09/2003"),
+  authors: "Steve McConnell",
+};

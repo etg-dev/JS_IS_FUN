@@ -67,31 +67,31 @@ class Library {
 
   createMember(persons) {}
 
-  removeFromPersons(personIndex) {}
+  #isStaff(staffCode) {}
 
-  isStaff(staffCode) {}
+  #findMember(nCode, staffCode, returnIndex) {}
 
-  findMember(nCode, staffCode, returnIndex) {}
+  findMember(nCode, staffCode) {}
 
   deleteMember(nCode, staffCode) {}
 
-  updateMember(nCode, staffCode, newPerson) {}
+  printAllMember() {}
 
-  readAllMembers() {}
+  updateMember(nCode, staffCode, newProp) {}
 
   addToBooks(book) {}
 
-  createBook(bookInfo) {}
+  createBook(books) {}
 
-  findBook(bookName, returnIndex) {}
+  printAllBooks() {}
 
-  removeFromBooks(bookIndex) {}
+  #findBook(nameBook, returnIndex, valid, staffCode) {}
 
-  deleteBook(bookName) {}
+  findBook(nameBook) {}
 
-  readAllBooks() {}
+  deleteBook(nameBook, staffCode) {}
 
-  updateBooks(bookName, newBookProperty) {}
+  updateBooks(bookName, staffCode, newBookProperty) {}
 }
 ```
 
