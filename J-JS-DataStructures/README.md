@@ -10,13 +10,17 @@ like Array or Objects
 The anwser is soo simple we always work with data and we need to or better word we have to manage our data and for specific purpose we should use proper data structure
 
 **1. Data Structure allow us to manage data**
+<br/>
 **2. easier find , delete or update data**
 
 There is 4 built-in data structure in javaScript
 
 **1. Array => Ordered list of data, Duplicate allowed, itrable**
+<br/>
 **2. Set => Unordered list of data, No duplicates, not itrable**
+<br/>
 **3. Objects => Key-value of un-ordered data, not itrable**
+<br/>
 **4. Map => Key-value pair of ordered, itrable**
 
 ---
