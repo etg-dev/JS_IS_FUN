@@ -1,202 +1,262 @@
 //LIFO -> Last in first out
 //What we need ?
 // 1. size()
-// 2. push(v)
+// 2. add(v)
 // 3. pop()
 // 4. top()
 // 5. print()
 
-//Doubly Ended QueueV1
-
 class Node {
-    #val;
-    #next;
+  #val = null;
+  #next = null;
 
-    constructor(val) {
-        this.#val = val;
-        this.#next = null;
-    }
+  constructor(val) {
+    this.#val = val;
+    this.#next = null;
+  }
 
-    set val(val) {
-        this.#val = val;
-    }
+  get val() {
+    return this.#val;
+  }
 
-    get val() {
-        return this.#val;
-    }
+  set val(val) {
+    this.#val = val;
+  }
 
-    set next(next) {
-        this.#next = next;
-    }
+  get next() {
+    return this.#next;
+  }
 
-    get next() {
-        return this.#next;
-    }
+  set next(next) {
+    this.#next = next;
+  }
 }
 
 class LinkedList {
-    #head;
-    #tail;
+  #head;
+  #tail;
 
-    constructor() {
-        this.#head = null;
-        this.#tail = null;
+  constructor() {
+    this.#head = null;
+    this.#tail = null;
+  }
 
-        this.length = 0;
+  get head() {
+    return this.#head;
+  }
+
+  get tail() {
+    return this.#tail;
+  }
+
+  append(val) {
+    const newNode = new Node(val);
+    if (!this.#head) {
+      this.#head = newNode;
     }
-
-    append(val) {
-        const newNode = new Node(val);
-
-        if (!this.#head) {
-            this.#head = newNode;
-        }
-        if (this.#tail) {
-            this.#tail.next = newNode;
-        }
-
-        this.#tail = newNode;
-
-        this.length++;
+    if (this.#tail) {
+      this.#tail.next = newNode;
     }
+    this.#tail = newNode;
+  }
 
-    /**
-     *
-     * @param {*} value
-     *
-     * Documentation:
-     *
-     * Add to top of the list
-     */
-    prepend(val) {
-        const newNode = new Node(val);
-        newNode.next = this.#head;
+  prepend(val) {
+    const newNode = new Node(val);
+    newNode.next = this.#head;
 
-        this.#head = newNode;
+    this.#head = newNode;
 
-        if (!this.#tail) {
-            this.#tail = newNode;
-        }
-
-        this.length++;
+    if (!this.#tail) {
+      this.#tail = newNode;
     }
+  }
 
-    findElem(index) {
-        if (index < 0 || index >= this.length) return null;
+  addToIndex(index, value) {
+    const newNode = new Node(value);
+    if (index < 0 || !this.#head) {
+      return -1;
+    }
+    if (index === 0) {
+      this.prepend(value);
+      return;
+    }
+    let counter = 0;
+    let curr = this.#head;
+    while (curr) {
+      if (!curr.next && counter === index - 1) {
+        this.append(value);
+        return;
+      }
+      if (counter === index - 1) {
+        newNode.next = curr.next;
+        curr.next = newNode;
+        return;
+      }
+      curr = curr.next;
+      counter++;
+    }
+    return -1;
+  }
 
-        let current = this.#head;
-
-        for (let i = 0; i < index; i++) {
-            current = current.next;
-        }
-
+  hasElement(index) {
+    if (index < 0) {
+      return -1;
+    }
+    let current = this.#head;
+    let counter = 0;
+    while (current) {
+      if (counter === index) {
         return current.val;
+      }
+      current = current.next;
+      counter++;
     }
+    return -1;
+  }
 
-    /**
-     * Documentation: Get index and value and replace it
-     *
-     *
-     * @param {index} Send index which is you want to replace
-     * @param {val} This param that replace to old value
-     * @returns True or False
-     *
-     */
-    updateElement(index, val) {
-        if (index < 0 || index >= this.length) return false;
-
-        let current = this.#head;
-
-        for (let i = 0; i < index; i++) {
-            current = current.next;
-        }
-
+  updateElement(index, val) {
+    let current = this.#head;
+    let counter = 0;
+    while (current) {
+      if (index === counter) {
         current.val = val;
+      }
+      current = current.next;
+      counter++;
+    }
+  }
 
-        return true;
+  deleteElement(index) {
+    let current = this.#head;
+    let counter = 0;
+
+    if (index < 0 && !this.#head) {
+      return;
     }
 
-    deleteElement(index) {
-        if (index < 0 || index >= this.length) return false;
-
-        if (index === 0) {
-            let temp = this.#head;
-            this.#head = this.#head.next;
-
-            this.length--;
-
-            return temp.val;
-        }
-
-        let current = this.#head;
-
-        let temp = null;
-        for (let i = 0; i < index - 1; i++) {
-            if (i === index - 1) {
-                temp = current.val;
-            }
-            current = current.next;
-        }
-
+    if (index === 0) {
+      this.#head = current.next;
+      return;
+    }
+    while (current && current.next) {
+      if (counter === index - 1) {
         current.next = current.next.next;
+      }
+      counter++;
+      current = current.next;
+    }
+  }
 
-        this.length--;
+  get length() {
+    let current = this.#head;
+    let counter = 0;
 
-        return temp;
+    while (current) {
+      current = current.next;
+      counter++;
     }
 
-    //READ ALL
-    printList() {
-        let current = this.#head;
-        while (current) {
-            console.log(current.val);
-            current = current.next;
-        }
+    return counter;
+  }
+
+  findFirst(val) {
+    if (!this.#head) {
+      return;
     }
+    let current = this.#head;
+    let counter = 0;
+    while (current) {
+      if (current.val === val) {
+        return counter;
+      }
+      current = current.next;
+      counter++;
+    }
+  }
+
+  findLast(val) {
+    if (!this.#head) {
+      return;
+    }
+    let current = this.#head;
+    let counter = 0;
+    let lastIndex = -1;
+    while (current) {
+      if (current.val === val) {
+        lastIndex = counter;
+      }
+      current = current.next;
+      counter++;
+    }
+    return lastIndex;
+  }
+
+  printList() {
+    if (!this.#head) {
+      return;
+    }
+    let temp = "";
+    let curr = this.#head;
+    while (curr) {
+      temp += curr.val;
+      if (curr.next) {
+        temp += " , ";
+      }
+      curr = curr.next;
+    }
+    console.log("{ " + temp + " }");
+  }
 }
-
 class Stack {
-    #list;
+  #list;
 
-    constructor() {
-        this.#list = new LinkedList();
-    }
+  constructor() {
+    this.#list = new LinkedList();
+  }
 
-    size() {
-        return this.#list.length;
-    }
+  size() {
+    return this.#list.length;
+  }
 
-    push(v) {
-        this.#list.prepend(v);
-    }
+  add(v) {
+    this.#list.append(v);
+  }
 
-    pop() {
-        if (this.size() === 0) return null;
+  pop() {
+    if (this.size() === 0) return null;
+    return this.#list.deleteElement(0);
+  }
 
-        return this.#list.deleteElement(0);
-    }
+  top() {
+    if (this.size() === 0) return null;
 
-    top() {
-        if (this.size() === 0) return null;
+    return this.#list.tail.val;
+  }
 
-        return this.#list.findElem(0);
-    }
+  print() {
+    if (this.size() === 0) return null;
 
-    print() {
-        if (this.size() === 0) return null;
-
-        this.#list.printList();
-    }
+    this.#list.printList();
+  }
 }
 
 const stack = new Stack();
 
-stack.push(1);
-stack.push(2);
-stack.push(3);
+stack.add(1);
+stack.add(2);
+stack.add(3);
 
+console.log("Before delete");
+stack.print();
+
+console.log("\nLength of stack");
+console.log(stack.size());
+
+console.log("\nTop element in stack");
 const top = stack.top();
+console.log(top);
 
 stack.pop();
 
+console.log("\nAfter delete");
 stack.print();

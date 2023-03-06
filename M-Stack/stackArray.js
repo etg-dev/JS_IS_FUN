@@ -1,62 +1,58 @@
 //LIFO -> Last in first out
 //What we need ?
 // 1. size()
-// 2. push(v)
+// 2. add(v)
 // 3. pop()
 // 4. top()
 // 5. print()
 
-class StackV1 {
-    #list;
+class Stack {
+  #list;
 
-    constructor() {
-        this.#list = []
-    }
+  constructor() {
+    this.#list = [];
+  }
 
-    size() {
-        // let i = 0;
-        // while (true) {
-        //     if (this.#list[i]) {
-        //         i++
-        //     } else {
-        //         break;
-        //     }
-        // }
-        // return i;
-        return this.#list.length;
-    }
+  size() {
+    // let i = 0;
+    // while (true) {
+    //     if (this.#list[i]) {
+    //         i++
+    //     } else {
+    //         break;
+    //     }
+    // }
+    // return i;
+    return this.#list.length;
+  }
 
-    push(v) {
-        this.#list.push(v);
-    }
+  add(v) {
+    this.#list.push(v);
+  }
 
-    pop() {
-        if (this.size() === 0) return null;
+  pop() {
+    if (this.size() === 0) return null;
+    return this.#list.pop();
+  }
 
-        return this.#list.pop();
-    }
+  top() {
+    if (this.size() === 0) return null;
+    const lastIndex = this.size() - 1;
+    return this.#list[lastIndex];
+  }
 
-    top() {
-        if (this.size() === 0) return null;
-
-        const lastIndex = this.size() - 1
-        return this.#list[lastIndex];
-    }
-
-    print() {
-        this.#list.map(element => {
-            console.log(element);
-        })
-    }
-
-
+  print() {
+    this.#list.map((element) => {
+      console.log(element);
+    });
+  }
 }
 
-const stack = new StackV1();
+const stack = new Stack();
 
-stack.push(1);
-stack.push(2);
-stack.push(3);
+stack.add(1);
+stack.add(2);
+stack.add(3);
 
 const top = stack.top();
 

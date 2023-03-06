@@ -1,61 +1,57 @@
 class Node {
-  #val;
-  #next;
+  #val = null;
+  #next = null;
+
   constructor(val) {
     this.#val = val;
     this.#next = null;
-  }
-
-  set val(val) {
-    this.#val = val;
   }
 
   get val() {
     return this.#val;
   }
 
-  set next(next) {
-    this.#next = next;
+  set val(val) {
+    this.#val = val;
   }
 
   get next() {
     return this.#next;
+  }
+
+  set next(next) {
+    this.#next = next;
   }
 }
 
 class LinkedList {
   #head;
   #tail;
+
   constructor() {
     this.#head = null;
     this.#tail = null;
+  }
 
-    this.length = 0;
+  get head() {
+    return this.#head;
+  }
+
+  get tail() {
+    return this.#tail;
   }
 
   append(val) {
     const newNode = new Node(val);
-
     if (!this.#head) {
       this.#head = newNode;
     }
     if (this.#tail) {
       this.#tail.next = newNode;
     }
-
     this.#tail = newNode;
-
-    this.length++;
   }
 
-  /**
-   *
-   * @param {*} value
-   *
-   * Documentation:
-   *
-   * Add to top of the list
-   */
   prepend(val) {
     const newNode = new Node(val);
     newNode.next = this.#head;
@@ -65,81 +61,142 @@ class LinkedList {
     if (!this.#tail) {
       this.#tail = newNode;
     }
-
-    this.length++;
   }
 
-  findElem(index) {
-    if (index < 0 || index >= this.length) return null;
-
-    let current = this.#head;
-
-    for (let i = 0; i < index; i++) {
-      current = current.next;
+  addToIndex(index, value) {
+    const newNode = new Node(value);
+    if (index < 0 || !this.#head) {
+      return -1;
     }
-
-    return current.val;
+    if (index === 0) {
+      this.prepend(value);
+      return;
+    }
+    let counter = 0;
+    let curr = this.#head;
+    while (curr) {
+      if (!curr.next && counter === index - 1) {
+        this.append(value);
+        return;
+      }
+      if (counter === index - 1) {
+        newNode.next = curr.next;
+        curr.next = newNode;
+        return;
+      }
+      curr = curr.next;
+      counter++;
+    }
+    return -1;
   }
 
-  /**
-   * Documentation: Get index and value and replace it
-   *
-   *
-   * @param {index} Send index which is you want to replace
-   * @param {val} This param that replace to old value
-   * @returns True or False
-   *
-   */
+  hasElement(index) {
+    if (index < 0) {
+      return -1;
+    }
+    let current = this.#head;
+    let counter = 0;
+    while (current) {
+      if (counter === index) {
+        return current.val;
+      }
+      current = current.next;
+      counter++;
+    }
+    return -1;
+  }
+
   updateElement(index, val) {
-    if (index < 0 || index >= this.length) return false;
-
     let current = this.#head;
-
-    for (let i = 0; i < index; i++) {
+    let counter = 0;
+    while (current) {
+      if (index === counter) {
+        current.val = val;
+      }
       current = current.next;
+      counter++;
     }
-
-    current.val = val;
-
-    return true;
   }
 
   deleteElement(index) {
-    if (index < 0 || index >= this.length) return false;
+    let current = this.#head;
+    let counter = 0;
+
+    if (index < 0 && !this.#head) {
+      return;
+    }
 
     if (index === 0) {
-      let temp = this.#head;
-      this.#head = this.#head.next;
-
-      this.length--;
-
-      return temp.val;
+      this.#head = current.next;
+      return;
     }
-
-    let current = this.#head;
-
-    let temp = null;
-    for (let i = 0; i < index - 1; i++) {
-      if (i === index - 1) {
-        temp = current.val;
+    while (current && current.next) {
+      if (counter === index - 1) {
+        current.next = current.next.next;
       }
+      counter++;
       current = current.next;
     }
-
-    current.next = current.next.next;
-
-    this.length--;
-
-    return temp;
   }
 
-  //READ ALL
-  printList() {
+  get length() {
     let current = this.#head;
+    let counter = 0;
+
     while (current) {
-      console.log(current.val);
       current = current.next;
+      counter++;
     }
+
+    return counter;
+  }
+
+  findFirst(val) {
+    if (!this.#head) {
+      return;
+    }
+    let current = this.#head;
+    let counter = 0;
+    while (current) {
+      if (current.val === val) {
+        return counter;
+      }
+      current = current.next;
+      counter++;
+    }
+  }
+
+  findLast(val) {
+    if (!this.#head) {
+      return;
+    }
+    let current = this.#head;
+    let counter = 0;
+    let lastIndex = -1;
+    while (current) {
+      if (current.val === val) {
+        lastIndex = counter;
+      }
+      current = current.next;
+      counter++;
+    }
+    return lastIndex;
+  }
+
+  printList() {
+    if (!this.#head) {
+      return;
+    }
+    let temp = "";
+    let curr = this.#head;
+    while (curr) {
+      temp += curr.val;
+      if (curr.next) {
+        temp += " , ";
+      }
+      curr = curr.next;
+    }
+    console.log("{ " + temp + " }");
   }
 }
 
@@ -159,22 +216,22 @@ class Queue {
     if (this.size() === 0) {
       return null;
     }
-    return this.#list.deleteElement(0);
+    this.#list.deleteElement(0);
+    return true;
   }
 
   head() {
     if (this.size() === 0) {
       return null;
     }
-    return this.#list.findElem(0);
+    return this.#list.head.val;
   }
 
   tail() {
     if (this.size() === 0) {
       return null;
     }
-    const length = this.size() - 1;
-    return this.#list.findElem(length);
+    return this.#list.tail.val;
   }
 
   print() {
@@ -188,10 +245,20 @@ queue.add(1);
 queue.add(2);
 queue.add(3);
 
-console.log(queue);
+console.log("Before remove");
+queue.print();
+
+console.log("\nQueue length");
 console.log(queue.size());
+
+console.log("\nTop element in queue");
 console.log(queue.head());
+
+console.log("\nLast element in queue");
 console.log(queue.tail());
+
+console.log("\nRemove top element in queue");
 console.log(queue.take());
-console.log("******");
+
+console.log("\nAfter remove");
 queue.print();

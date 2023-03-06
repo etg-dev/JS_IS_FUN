@@ -24,23 +24,18 @@ class Queue {
 
   take() {
     if (this.size() === 0) return null;
-
     this.#list.shift();
-
     return true;
   }
 
   head() {
     if (this.size() === 0) return null;
-
     return this.#list[0];
   }
 
   tail() {
     if (this.size() === 0) return null;
-
     const lastElement = this.size() - 1;
-
     return this.#list[lastElement];
   }
 
@@ -58,6 +53,8 @@ const queue = new Queue();
 queue.add(1);
 queue.add(2);
 queue.add(3);
+
+queue.print();
 
 const length = queue.size();
 
