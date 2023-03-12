@@ -229,9 +229,6 @@ class BST {
   }
 
   levelOrder() {
-    //                    18
-    //               11        22
-    //             8   13   19    23
     console.log(
       "{ " + this.root.value,
       this.root.left.value,
